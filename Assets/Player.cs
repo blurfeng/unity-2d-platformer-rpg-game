@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
 
     [Header("Movement")] 
     public float moveSpeed = 8f;
+    
+    public bool facingRight = true;
 
     private void Awake()
     {
@@ -57,8 +59,27 @@ public class Player : MonoBehaviour
         StateMachine.Update(Time.deltaTime);
     }
     
-    public void SetVelocityX(float x)
+    public void SetVelocityX(float velocityX)
     {
-        Rb.linearVelocity = new  Vector2(x, Rb.linearVelocity.y);
+        Rb.linearVelocity = new  Vector2(velocityX, Rb.linearVelocity.y);
+        HandleFlip(velocityX);
+    }
+
+    private void HandleFlip(float velocityX)
+    {
+        if (facingRight && velocityX < 0)
+        {
+            Flip();
+        }
+        else if (!facingRight && velocityX > 0)
+        {
+            Flip();
+        }
+    }
+
+    private void Flip()
+    {
+        transform.Rotate(0f, 180f, 0f);
+        facingRight = !facingRight;
     }
 }
