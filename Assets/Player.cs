@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     public void ChangeToJumpState() => StateMachine?.ChangeState(_jumpState);
     private FallState _fallState;
     public void ChangeToFallState() => StateMachine?.ChangeState(_fallState);
+    private WallSlideState _wallSlideState;
+    public void ChangeToWallSlideState() => StateMachine?.ChangeState(_wallSlideState);
+    private WallJumpState _wallJumpState;
+    public void ChangeToWallJumpState() => StateMachine?.ChangeState(_wallJumpState);
 
     public Vector2 MoveInput  { get; private set; }
     public bool HasMoveInput => MoveInput != Vector2.zero;
@@ -27,20 +31,31 @@ public class Player : MonoBehaviour
     [Header("Movement")] 
     public float moveSpeed = 8f;
     public bool facingRight = true;
-    [Header("Jump")]
-    public float jumpForce = 5f;
+    public float FacingDir { get; private set; } = 1f;
+    public float jumpForce = 12f;
+    public Vector2 wallJumpForce = new Vector2(6f, 12f);
     [Range(0, 1)]
     public float airedMoveMultiplier = 0.7f;
+    [Range(0, 1)]
+    public float wallSliderMultiplier = 0.7f;
 
     [Header("Collision detection")]
     [SerializeField]
     private float groundCheckDistance = 1.1f;
     [SerializeField]
+    private float wallCheckDistance = 0.4f;
+    [SerializeField]
     private LayerMask groundLayer;
+    
     /// <summary>
     /// 是否接触地面，基于groundCheckDistance和groundLayer进行检测。
     /// </summary>
     public bool IsGrounded {get; private set;}
+    
+    /// <summary>
+    /// 是否接触墙壁，基于wallCheckDistance和groundLayer进行检测。
+    /// </summary>
+    public bool IsWallDetected {get; private set;}
 
     private void Awake()
     {
@@ -54,6 +69,8 @@ public class Player : MonoBehaviour
         _moveState = new MoveState(StateMachine);
         _jumpState = new JumpState(StateMachine);
         _fallState = new FallState(StateMachine);
+        _wallSlideState = new WallSlideState(StateMachine);
+        _wallJumpState = new WallJumpState(StateMachine);
     }
 
     private void OnEnable()
@@ -81,6 +98,12 @@ public class Player : MonoBehaviour
     {
         HandleCollisionDetected();
         StateMachine.Update(Time.deltaTime);
+    }
+    
+    public void SetVelocity(float velocityX, float velocityY)
+    {
+        Rb.linearVelocity = new  Vector2(velocityX, velocityY);
+        HandleFlip(velocityX);
     }
     
     public void SetVelocityX(float velocityX)
@@ -111,19 +134,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
         transform.Rotate(0f, 180f, 0f);
         facingRight = !facingRight;
+        FacingDir = facingRight ? 1f : -1f;
     }
 
     private void HandleCollisionDetected()
     {
         IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+        IsWallDetected = Physics2D.Raycast(transform.position, new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundCheckDistance);
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0f, -groundCheckDistance, 0f));
+        Gizmos.DrawLine(transform.position, transform.position + new  Vector3(FacingDir * wallCheckDistance, 0f, 0f));
     }
 }

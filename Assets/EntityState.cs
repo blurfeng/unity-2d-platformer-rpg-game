@@ -8,6 +8,7 @@ public abstract class EntityState
     private static readonly int _velocityY = Animator.StringToHash("velocityY");
     protected StateMachine StateMachine { get; private set; }
     protected Player Player => StateMachine?.Player;
+    protected Vector2 MoveInput => Player?.MoveInput ?? Vector2.zero;
     protected PlayerInputSet PlayerInput => Player?.PlayerInput;
     protected Animator Animator => Player?.Animator;
     protected string StateName { get; private set; }
