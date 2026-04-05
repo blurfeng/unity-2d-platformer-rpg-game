@@ -1,4 +1,4 @@
-﻿public abstract class AiredState : GroundedState
+﻿public abstract class AiredState : EntityState
 {
     public AiredState(StateMachine stateMachine, string stateName, string animBoolName) : base(stateMachine, stateName, animBoolName)
     {

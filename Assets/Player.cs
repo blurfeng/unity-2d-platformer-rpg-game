@@ -9,18 +9,20 @@ public class Player : MonoBehaviour
     public PlayerInputSet PlayerInput { get; private set; }
     public StateMachine StateMachine { get; private set; }
 
-    private IdleState _idleState;
-    public void ChangeToIdleState() => StateMachine?.ChangeState(_idleState);
-    private MoveState _moveState;
-    public void ChangeToMoveState() => StateMachine?.ChangeState(_moveState);
-    private JumpState _jumpState;
-    public void ChangeToJumpState() => StateMachine?.ChangeState(_jumpState);
-    private FallState _fallState;
-    public void ChangeToFallState() => StateMachine?.ChangeState(_fallState);
-    private WallSlideState _wallSlideState;
-    public void ChangeToWallSlideState() => StateMachine?.ChangeState(_wallSlideState);
-    private WallJumpState _wallJumpState;
-    public void ChangeToWallJumpState() => StateMachine?.ChangeState(_wallJumpState);
+    public IdleState IdleState { get; private set; }
+    public void ChangeToIdleState() => StateMachine?.ChangeState(IdleState);
+    public MoveState MoveState { get; private set; }
+    public void ChangeToMoveState() => StateMachine?.ChangeState(MoveState);
+    public JumpState JumpState { get; private set; }
+    public void ChangeToJumpState() => StateMachine?.ChangeState(JumpState);
+    public FallState FallState { get; private set; }
+    public void ChangeToFallState() => StateMachine?.ChangeState(FallState);
+    public WallSlideState WallSlideState { get; private set; }
+    public void ChangeToWallSlideState() => StateMachine?.ChangeState(WallSlideState);
+    public WallJumpState WallJumpState { get; private set; }
+    public void ChangeToWallJumpState() => StateMachine?.ChangeState(WallJumpState);
+    public DashState DashState { get; private set; }
+    public void ChangeToDashState() => StateMachine?.ChangeState(DashState);
 
     public Vector2 MoveInput  { get; private set; }
     public bool HasMoveInput => MoveInput != Vector2.zero;
@@ -38,6 +40,10 @@ public class Player : MonoBehaviour
     public float airedMoveMultiplier = 0.7f;
     [Range(0, 1)]
     public float wallSliderMultiplier = 0.7f;
+    [Space]
+    public float dashDuration = 0.25f;
+
+    public float dashSpeed = 20f;
 
     [Header("Collision detection")]
     [SerializeField]
@@ -65,12 +71,13 @@ public class Player : MonoBehaviour
         StateMachine = new StateMachine();
         PlayerInput = new PlayerInputSet();
         
-        _idleState = new IdleState(StateMachine);
-        _moveState = new MoveState(StateMachine);
-        _jumpState = new JumpState(StateMachine);
-        _fallState = new FallState(StateMachine);
-        _wallSlideState = new WallSlideState(StateMachine);
-        _wallJumpState = new WallJumpState(StateMachine);
+        IdleState = new IdleState(StateMachine);
+        MoveState = new MoveState(StateMachine);
+        JumpState = new JumpState(StateMachine);
+        FallState = new FallState(StateMachine);
+        WallSlideState = new WallSlideState(StateMachine);
+        WallJumpState = new WallJumpState(StateMachine);
+        DashState = new DashState(StateMachine);
     }
 
     private void OnEnable()
@@ -91,7 +98,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        StateMachine.Initialize(this, _idleState);
+        StateMachine.Initialize(this, IdleState);
     }
 
     private void Update()
@@ -120,6 +127,16 @@ public class Player : MonoBehaviour
     public void ClearVelocityX()
     {
         Rb.linearVelocity = new  Vector2(0f, Rb.linearVelocity.y);
+    }
+    
+    public void ClearVelocityY()
+    {
+        Rb.linearVelocity = new  Vector2(Rb.linearVelocity.x, 0f);
+    }
+    
+    public void ClearVelocity()
+    {
+        Rb.linearVelocity = Vector2.zero;
     }
 
     private void HandleFlip(float velocityX)

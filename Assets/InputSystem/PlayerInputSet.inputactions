@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "70428b4e-1d5d-4abb-bf5c-1b0717325c09",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -43,7 +52,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keybord & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -54,7 +63,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keybord & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -65,7 +74,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keybord & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -76,7 +85,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keybord & Mouse",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -87,8 +96,19 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keybord & Mouse",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6dca2dd1-3d34-467d-96b3-68a4452e9b95",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keybord & Mouse",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

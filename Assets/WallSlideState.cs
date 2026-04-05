@@ -10,7 +10,7 @@
         
         HandleWallSlide();
         
-        if (PlayerInput.Player.Jump.WasPressedThisDynamicUpdate())
+        if (Input.Player.Jump.WasPressedThisDynamicUpdate())
         {
             Player.ChangeToWallJumpState();
         }

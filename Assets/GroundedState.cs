@@ -20,7 +20,7 @@ public abstract class GroundedState : EntityState
     {
         base.Update(deltaTime);
         
-        if (PlayerInput.Player.Jump.WasPerformedThisFrame())
+        if (Input.Player.Jump.WasPerformedThisFrame())
         {
             Player.ChangeToJumpState();
         }

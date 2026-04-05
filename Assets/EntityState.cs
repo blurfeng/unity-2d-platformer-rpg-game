@@ -9,11 +9,13 @@ public abstract class EntityState
     protected StateMachine StateMachine { get; private set; }
     protected Player Player => StateMachine?.Player;
     protected Vector2 MoveInput => Player?.MoveInput ?? Vector2.zero;
-    protected PlayerInputSet PlayerInput => Player?.PlayerInput;
+    protected PlayerInputSet Input => Player?.PlayerInput;
     protected Animator Animator => Player?.Animator;
     protected string StateName { get; private set; }
     protected string AnimBoolName { get; private set; }
     protected Rigidbody2D Rb => Player?.Rb;
+
+    protected float stateTimer;
     
     protected EntityState(StateMachine stateMachine, string stateName, string animBoolName)
     {
@@ -43,5 +45,23 @@ public abstract class EntityState
         // 在状态更新时执行的逻辑
         // Debug.Log($"Updating state: {StateName}.");
         Animator.SetFloat(_velocityY, Rb.linearVelocity.y);
+
+        if (Input.Player.Dash.WasPressedThisFrame() && CanDash())
+        {
+            Player.ChangeToDashState();
+        }
+        
+        stateTimer -= deltaTime;
+    }
+
+    private bool CanDash()
+    {
+        if (Player.IsWallDetected)
+            return false;
+        
+        if (StateMachine.CurrentState == Player.DashState)
+            return false;
+        
+        return true;
     }
 }
