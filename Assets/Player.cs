@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,13 +34,21 @@ public class Player : MonoBehaviour
     public bool HasMoveInputY => MoveInput.y != 0;
     public bool JumpPressed { get; private set; }
 
-    [Header("Attack")] public Vector2 attackVelocity = new Vector2(3f, 1.5f);
+    [Header("Attack")] 
+    public Vector2[] attackVelocities = new Vector2[]
+    {
+        new Vector2(3f, 1.5f),
+        new Vector2(1f, 2.5f),
+        new Vector2(2.75f, 1.75f)
+    };
     public float attackVelocityDuration = 0.1f;
+    public float attackComboResetTime = 0.2f;
+    private Coroutine _attackQueueCo;
 
     [Header("Movement")] 
     public float moveSpeed = 8f;
     public bool facingRight = true;
-    public float FacingDir { get; private set; } = 1f;
+    public int FacingDir { get; private set; } = 1;
     public float jumpForce = 12f;
     public Vector2 wallJumpForce = new Vector2(6f, 12f);
     [Range(0, 1)]
@@ -113,6 +123,21 @@ public class Player : MonoBehaviour
         StateMachine.Update(Time.deltaTime);
     }
 
+    public void EnterAttackStateWithDelay()
+    {
+        if (_attackQueueCo != null)
+        {
+            StopCoroutine(_attackQueueCo);
+        }
+        _attackQueueCo = StartCoroutine(HandleCollisionDetectedCo());
+    }
+
+    private IEnumerator HandleCollisionDetectedCo()
+    {
+        yield return new WaitForEndOfFrame();
+        StateMachine.ChangeState(AttackBasicState);
+    }
+
     public void CallAnimationTrigger()
     {
         StateMachine.CurrentState.CallAnimationTrigger();
@@ -166,7 +191,7 @@ public class Player : MonoBehaviour
     {
         transform.Rotate(0f, 180f, 0f);
         facingRight = !facingRight;
-        FacingDir = facingRight ? 1f : -1f;
+        FacingDir = facingRight ? 1 : -1;
     }
 
     private void HandleCollisionDetected()

@@ -3,6 +3,7 @@
 public class DashState : EntityState
 {
     private float _originalGravityScale;
+    private int _dashDir;
     
     public DashState(StateMachine stateMachine) : base(stateMachine, "Dash", "dash")
     {
@@ -12,11 +13,10 @@ public class DashState : EntityState
     {
         base.Enter();
 
+        _dashDir = MoveInput.x != 0 ? (int)Mathf.Sign(MoveInput.x) : Player.FacingDir;
         stateTimer = Player.dashDuration;
         _originalGravityScale = Rb.gravityScale;
         Rb.gravityScale = 0f;
-        
-        Debug.Log("Entered Dash State");
     }
     
     public override void Exit()
@@ -25,15 +25,13 @@ public class DashState : EntityState
 
         Player.ClearVelocity();
         Rb.gravityScale = _originalGravityScale;
-        
-        Debug.Log("Exited Dash State");
     }
 
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
         
-        Player.SetVelocityX(Player.FacingDir * Player.dashSpeed);
+        Player.SetVelocityX(_dashDir * Player.dashSpeed);
 
         CancelDashCheck();
     }
