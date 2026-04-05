@@ -3,7 +3,7 @@
 /// <summary>
 /// 代表实体处于空闲状态的类，继承自EntityState。
 /// </summary>
-public class MoveState : EntityState
+public class MoveState : GroundedState
 {
     public MoveState(StateMachine stateMachine) : base(stateMachine, "Move", "move")
     {

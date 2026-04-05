@@ -3,7 +3,7 @@
 /// <summary>
 /// 代表实体处于空闲状态的类，继承自EntityState。
 /// </summary>
-public class IdleState : EntityState
+public class IdleState : GroundedState
 {
     public IdleState(StateMachine stateMachine) : base(stateMachine, "Idle", "idle")
     {
@@ -12,6 +12,8 @@ public class IdleState : EntityState
     public override void Enter()
     {
         base.Enter();
+
+        Player.ClearVelocityX();
     }
     
     public override void Exit()
