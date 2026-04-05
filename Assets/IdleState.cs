@@ -5,7 +5,7 @@
 /// </summary>
 public class IdleState : EntityState
 {
-    public IdleState(StateMachine stateMachine) : base(stateMachine, "Idle")
+    public IdleState(StateMachine stateMachine) : base(stateMachine, "Idle", "idle")
     {
     }
 

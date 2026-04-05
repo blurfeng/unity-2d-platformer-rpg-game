@@ -5,7 +5,7 @@
 /// </summary>
 public class MoveState : EntityState
 {
-    public MoveState(StateMachine stateMachine) : base(stateMachine, "Move")
+    public MoveState(StateMachine stateMachine) : base(stateMachine, "Move", "move")
     {
     }
 

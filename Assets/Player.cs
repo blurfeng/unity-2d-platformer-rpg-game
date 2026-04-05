@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private Rigidbody2D rb;
+    public Animator Animator { get; private set; }
     private PlayerInputSet _playerInput;
     public StateMachine StateMachine { get; private set; }
 
@@ -21,6 +20,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        Animator = GetComponentInChildren<Animator>();
+        
         StateMachine = new StateMachine();
         _playerInput = new PlayerInputSet();
         
