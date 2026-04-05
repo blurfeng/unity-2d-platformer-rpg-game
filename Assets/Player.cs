@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public Animator Animator { get; private set; }
+    public Rigidbody2D Rb { get; private set; }
     private PlayerInputSet _playerInput;
     public StateMachine StateMachine { get; private set; }
 
@@ -18,9 +19,13 @@ public class Player : MonoBehaviour
     public bool HasMoveInputX => MoveInput.x != 0;
     public bool HasMoveInputY => MoveInput.y != 0;
 
+    [Header("Movement")] 
+    public float moveSpeed = 8f;
+
     private void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
+        Rb = GetComponent<Rigidbody2D>();
         
         StateMachine = new StateMachine();
         _playerInput = new PlayerInputSet();
@@ -50,5 +55,10 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.Update(Time.deltaTime);
+    }
+    
+    public void SetVelocityX(float x)
+    {
+        Rb.linearVelocity = new  Vector2(x, Rb.linearVelocity.y);
     }
 }

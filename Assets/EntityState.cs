@@ -10,6 +10,7 @@ public abstract class EntityState
     protected Animator Animator => Player?.Animator;
     protected string StateName { get; private set; }
     protected string AnimBoolName { get; private set; }
+    protected Rigidbody2D Rb => Player?.Rb;
     
     public EntityState(StateMachine stateMachine, string stateName, string animBoolName)
     {

@@ -25,5 +25,7 @@ public class MoveState : EntityState
         
         if (!Player.HasMoveInputX)
             Player.ChangeToIdleState();
+        
+        Player.SetVelocityX(Player.MoveInput.x * Player.moveSpeed);
     }
 }
