@@ -22,5 +22,8 @@ public class MoveState : EntityState
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
+        
+        if (!Player.HasMoveInputX)
+            Player.ChangeToIdleState();
     }
 }

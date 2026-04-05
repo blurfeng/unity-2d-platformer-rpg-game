@@ -23,7 +23,7 @@ public class IdleState : EntityState
     {
         base.Update(deltaTime);
         
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Player.HasMoveInputX)
             Player.ChangeToMoveState();
     }
 }
