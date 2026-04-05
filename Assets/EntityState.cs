@@ -1,31 +1,36 @@
 using UnityEngine;
 
-public class EntityState
+/// <summary>
+/// 实体状态的基类，定义了状态的基本结构和行为。
+/// </summary>
+public abstract class EntityState
 {
-    protected StateMachine stateMachine;
-    protected string stateName;
+    protected StateMachine StateMachine { get; private set; }
+    protected Player Player => StateMachine?.Player;
+    protected string StateName { get; private set; }
+    
     
     public EntityState(StateMachine stateMachine, string stateName)
     {
-        this.stateMachine = stateMachine;
-        this.stateName = stateName;
+        StateMachine = stateMachine;
+        StateName = stateName;
     }
 
     public virtual void Enter()
     {
         // 当状态改变时，新状态进入时执行的逻辑
-        Debug.Log($"Entering state: {stateName}.");
+        Debug.Log($"Entering state: {StateName}.");
+    }
+    
+    public virtual void Exit()
+    {
+        // 当状态改变时，旧状态退出时执行的逻辑
+        Debug.Log($"Exiting state: {StateName}.");
     }
     
     public virtual void Update(float deltaTime)
     {
         // 在状态更新时执行的逻辑
-        Debug.Log($"Updating state: {stateName}.");
-    }
-
-    public virtual void Exit()
-    {
-        // 当状态改变时，旧状态退出时执行的逻辑
-        Debug.Log($"Exiting state: {stateName}.");
+        Debug.Log($"Updating state: {StateName}.");
     }
 }

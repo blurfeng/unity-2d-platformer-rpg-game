@@ -6,10 +6,16 @@ public class StateMachine
     /// 当前状态。
     /// </summary>
     public EntityState CurrentState { get; private set; }
+
+    /// <summary>
+    /// 状态机所属的玩家对象。
+    /// </summary>
+    public Player Player { get; private set; }
     
-    public void Initialize(EntityState state)
+    public void Initialize(Player player, EntityState state)
     {
-        SetState(state);
+        Player = player;
+        ChangeState(state);
     }
 
     public void Update(float deltaTime)
@@ -17,7 +23,7 @@ public class StateMachine
         CurrentState?.Update(deltaTime);
     }
 
-    private void SetState(EntityState state)
+    public void ChangeState(EntityState state)
     {
         if (CurrentState != null)
         {
