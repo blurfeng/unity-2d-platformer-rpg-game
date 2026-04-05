@@ -323,6 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c489eb5e99d30549ac8683634b86796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  attackVelocity: {x: 3, y: 1.5}
+  attackVelocityDuration: 0.1
   moveSpeed: 8
   facingRight: 1
   jumpForce: 12
@@ -427,6 +429,7 @@ GameObject:
   - component: {fileID: 438922108}
   - component: {fileID: 438922109}
   - component: {fileID: 438922110}
+  - component: {fileID: 438922111}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -530,6 +533,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &438922111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438922107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b55da90bbf449ab3537110a7852c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationTriggers
 --- !u!1 &493387053
 GameObject:
   m_ObjectHideFlags: 0

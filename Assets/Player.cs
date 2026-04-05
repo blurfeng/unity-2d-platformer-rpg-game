@@ -23,12 +23,17 @@ public class Player : MonoBehaviour
     public void ChangeToWallJumpState() => StateMachine?.ChangeState(WallJumpState);
     public DashState DashState { get; private set; }
     public void ChangeToDashState() => StateMachine?.ChangeState(DashState);
+    public AttackBasicState AttackBasicState { get; private set; }
+    public void ChangeToAttackBasicState() => StateMachine?.ChangeState(AttackBasicState);
 
     public Vector2 MoveInput  { get; private set; }
     public bool HasMoveInput => MoveInput != Vector2.zero;
     public bool HasMoveInputX => MoveInput.x != 0;
     public bool HasMoveInputY => MoveInput.y != 0;
     public bool JumpPressed { get; private set; }
+
+    [Header("Attack")] public Vector2 attackVelocity = new Vector2(3f, 1.5f);
+    public float attackVelocityDuration = 0.1f;
 
     [Header("Movement")] 
     public float moveSpeed = 8f;
@@ -78,6 +83,7 @@ public class Player : MonoBehaviour
         WallSlideState = new WallSlideState(StateMachine);
         WallJumpState = new WallJumpState(StateMachine);
         DashState = new DashState(StateMachine);
+        AttackBasicState = new AttackBasicState(StateMachine);
     }
 
     private void OnEnable()
@@ -105,6 +111,11 @@ public class Player : MonoBehaviour
     {
         HandleCollisionDetected();
         StateMachine.Update(Time.deltaTime);
+    }
+
+    public void CallAnimationTrigger()
+    {
+        StateMachine.CurrentState.CallAnimationTrigger();
     }
     
     public void SetVelocity(float velocityX, float velocityY)

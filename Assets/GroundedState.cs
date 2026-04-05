@@ -24,10 +24,13 @@ public abstract class GroundedState : EntityState
         {
             Player.ChangeToJumpState();
         }
-
-        if (!Player.IsGrounded && Rb.linearVelocity.y < 0f)
+        else if (!Player.IsGrounded && Rb.linearVelocity.y < 0f)
         {
             Player.ChangeToFallState();
+        }
+        else if (Input.Player.Attack.WasPerformedThisFrame())
+        {
+            Player.ChangeToAttackBasicState();
         }
     }
 }

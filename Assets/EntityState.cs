@@ -16,6 +16,7 @@ public abstract class EntityState
     protected Rigidbody2D Rb => Player?.Rb;
 
     protected float stateTimer;
+    protected bool triggerCalled;
     
     protected EntityState(StateMachine stateMachine, string stateName, string animBoolName)
     {
@@ -28,6 +29,7 @@ public abstract class EntityState
     {
         // 当状态改变时，新状态进入时执行的逻辑
         // Debug.Log($"Entering state: {StateName}.");
+        triggerCalled = false;
         
         Animator.SetBool(AnimBoolName, true);
     }
@@ -38,6 +40,11 @@ public abstract class EntityState
         // Debug.Log($"Exiting state: {StateName}.");
         
         Animator.SetBool(AnimBoolName, false);
+    }
+
+    public void CallAnimationTrigger()
+    {
+        triggerCalled = true;
     }
     
     public virtual void Update(float deltaTime)
