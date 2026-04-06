@@ -33,4 +33,14 @@ public class StateMachine
         CurrentState = state;
         CurrentState.Enter();
     }
+    
+    /// <summary>
+    /// 检查当前状态是否与指定状态相同。
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    public bool CheckCurrentState(EntityState state)
+    {
+        return CurrentState == state;
+    }
 }

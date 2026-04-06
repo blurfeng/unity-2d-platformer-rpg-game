@@ -10,17 +10,12 @@
         
         Player.SetVelocityY(Player.jumpForce);
     }
-    
-    public override void Exit()
-    {
-        base.Exit();
-    }
 
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
         
-        if (Rb.linearVelocity.y < 0f)
+        if (Rb.linearVelocity.y < 0f && !StateMachine.CheckCurrentState(Player.JumpAttackState))
         {
             Player.ChangeToFallState();
         }

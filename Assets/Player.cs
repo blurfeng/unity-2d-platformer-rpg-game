@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     public void ChangeToDashState() => StateMachine?.ChangeState(DashState);
     public AttackBasicState AttackBasicState { get; private set; }
     public void ChangeToAttackBasicState() => StateMachine?.ChangeState(AttackBasicState);
+    public JumpAttackState JumpAttackState { get; private set; }
+    public void ChangeToJumpAttackState() => StateMachine?.ChangeState(JumpAttackState);
 
     public Vector2 MoveInput  { get; private set; }
     public bool HasMoveInput => MoveInput != Vector2.zero;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
         new Vector2(1f, 2.5f),
         new Vector2(2.75f, 1.75f)
     };
+    public Vector2 jumpAttackVelocity = new Vector2(5f, -6f);
     public float attackVelocityDuration = 0.1f;
     public float attackComboResetTime = 0.2f;
     private Coroutine _attackQueueCo;
@@ -94,6 +97,7 @@ public class Player : MonoBehaviour
         WallJumpState = new WallJumpState(StateMachine);
         DashState = new DashState(StateMachine);
         AttackBasicState = new AttackBasicState(StateMachine);
+        JumpAttackState = new JumpAttackState(StateMachine);
     }
 
     private void OnEnable()

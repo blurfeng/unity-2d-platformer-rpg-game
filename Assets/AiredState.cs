@@ -17,6 +17,11 @@
         {
             Player.ChangeToWallSlideState();
         }
+        
+        if (Input.Player.Attack.WasPerformedThisFrame())
+        {
+            Player.ChangeToJumpAttackState();
+        }
     }
         
 }

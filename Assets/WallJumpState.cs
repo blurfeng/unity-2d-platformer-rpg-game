@@ -1,6 +1,6 @@
 ﻿public class WallJumpState : EntityState
 {
-    public WallJumpState(StateMachine stateMachine) : base(stateMachine, "WallJump", "JumpFall")
+    public WallJumpState(StateMachine stateMachine) : base(stateMachine, "WallJump", "jumpFall")
     {
     }
 
