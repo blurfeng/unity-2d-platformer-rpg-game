@@ -64,12 +64,11 @@ public class Player : MonoBehaviour
     public float dashSpeed = 20f;
 
     [Header("Collision detection")]
-    [SerializeField]
-    private float groundCheckDistance = 1.1f;
-    [SerializeField]
-    private float wallCheckDistance = 0.4f;
-    [SerializeField]
-    private LayerMask groundLayer;
+    [SerializeField] private float groundCheckDistance = 1.1f;
+    [SerializeField] private float wallCheckDistance = 0.4f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform primaryWallCheck;
+    [SerializeField] private Transform secondaryWallCheck;
     
     /// <summary>
     /// 是否接触地面，基于groundCheckDistance和groundLayer进行检测。
@@ -201,12 +200,14 @@ public class Player : MonoBehaviour
     private void HandleCollisionDetected()
     {
         IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
-        IsWallDetected = Physics2D.Raycast(transform.position, new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer);
+        IsWallDetected = Physics2D.Raycast(primaryWallCheck.position, new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer)
+            && Physics2D.Raycast(secondaryWallCheck.position, new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0f, -groundCheckDistance, 0f));
-        Gizmos.DrawLine(transform.position, transform.position + new  Vector3(FacingDir * wallCheckDistance, 0f, 0f));
+        if (primaryWallCheck) Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new  Vector3(FacingDir * wallCheckDistance, 0f, 0f));
+        if (secondaryWallCheck) Gizmos.DrawLine(secondaryWallCheck.position, secondaryWallCheck.position + new  Vector3(FacingDir * wallCheckDistance, 0f, 0f));
     }
 }

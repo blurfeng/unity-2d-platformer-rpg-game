@@ -23,7 +23,7 @@ public class MoveState : GroundedState
     {
         base.Update(deltaTime);
         
-        if (!Player.HasMoveInputX)
+        if (!Player.HasMoveInputX || Player.IsWallDetected)
             Player.ChangeToIdleState();
         
         Player.SetVelocityX(MoveInput.x * Player.moveSpeed);
