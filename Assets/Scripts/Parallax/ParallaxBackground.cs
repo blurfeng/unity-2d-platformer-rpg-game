@@ -12,8 +12,11 @@ public class ParallaxBackground : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main;
-        _cameraHalfWidth = _mainCamera.orthographicSize * _mainCamera.aspect;
-        CalculateBackgroundWidth();
+        if (_mainCamera)
+        {
+            _cameraHalfWidth = _mainCamera.orthographicSize * _mainCamera.aspect;
+        }
+        InitializeLayers();
     }
 
     private void FixedUpdate()
@@ -32,7 +35,7 @@ public class ParallaxBackground : MonoBehaviour
         }
     }
 
-    private void CalculateBackgroundWidth()
+    private void InitializeLayers()
     {
         foreach (ParallaxLayer layer in backgroundLayers)
         {

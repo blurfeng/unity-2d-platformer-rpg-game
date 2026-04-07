@@ -13,10 +13,10 @@
             Player.SetVelocityX(MoveInput.x * (Player.moveSpeed * Player.airedMoveMultiplier));
         }
 
-        if (Player.IsWallDetected)
-        {
-            Player.ChangeToWallSlideState();
-        }
+        // if (Player.IsWallDetected)
+        // {
+        //     Player.ChangeToWallSlideState();
+        // }
         
         if (Input.Player.Attack.WasPerformedThisFrame())
         {

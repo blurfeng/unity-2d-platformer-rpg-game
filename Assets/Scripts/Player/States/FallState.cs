@@ -22,5 +22,10 @@
         {
             Player.ChangeToIdleState();
         }
+        else if (Player.IsWallDetected)
+        {
+            // 可能撞到墙壁，进入抓墙滑动状态。
+            Player.ChangeToWallSlideState();
+        }
     }
 }

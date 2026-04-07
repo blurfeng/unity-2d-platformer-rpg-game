@@ -26,7 +26,7 @@ public class IdleState : GroundedState
         base.Update(deltaTime);
 
         // 当角色在对着墙壁时，不能往墙壁移动。
-        if (Mathf.Approximately(MoveInput.x, Player.FacingDir) && Player.IsWallDetected)
+        if (Mathf.Approximately(MoveInput.x, Player.FacingDir)&& Player.IsWallDetected)
             return;
         
         if (Player.HasMoveInputX)

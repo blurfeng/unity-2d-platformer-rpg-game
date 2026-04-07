@@ -43,9 +43,15 @@ public class DashState : EntityState
         if (cancel)
         {
             if (Player.IsGrounded)
+            {
+                // 在地面时，直接切换到Idle。
                 Player.ChangeToIdleState();
+            }
             else
-                Player.ChangeToFallState();
+            {
+                // 在空中时，尝试切换到抓墙壁滑动，如果实际上没有墙壁会直接切换到Fall。
+                Player.ChangeToWallSlideState();
+            }
         }
     }
 }
