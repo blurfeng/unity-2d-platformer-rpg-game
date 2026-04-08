@@ -13,6 +13,8 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 1.1f;
     [SerializeField] private float wallCheckDistance = 0.4f;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform forwardGroundCheck;
+    [SerializeField] private float forwardGroundCheckDistance = 1.1f;
     [SerializeField] private Transform primaryWallCheck;
     [SerializeField] private Transform secondaryWallCheck;
     
@@ -20,6 +22,11 @@ public abstract class Entity : MonoBehaviour
     /// 是否接触地面，基于groundCheckDistance和groundLayer进行检测。
     /// </summary>
     public bool IsGrounded {get; private set;}
+    
+    /// <summary>
+    /// 是否前方接触地面，基于groundCheckDistance和groundLayer进行检测。
+    /// </summary>
+    public bool IsGroundedForward {get; private set;}
     
     /// <summary>
     /// 是否接触墙壁，基于wallCheckDistance和groundLayer进行检测。
@@ -112,13 +119,32 @@ public abstract class Entity : MonoBehaviour
     private void HandleCollisionDetected()
     {
         IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
-        IsWallDetected = Physics2D.Raycast(primaryWallCheck.position, new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer)
-            && Physics2D.Raycast(secondaryWallCheck.position, new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer);
+        if (forwardGroundCheck)
+        {
+            IsGroundedForward = Physics2D.Raycast(forwardGroundCheck.position, Vector2.down, forwardGroundCheckDistance, groundLayer);
+        }
+
+        if (primaryWallCheck || secondaryWallCheck)
+        {
+            bool primaryHit = primaryWallCheck 
+                              && Physics2D.Raycast(
+                                  primaryWallCheck.position, 
+                                  new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer);
+            
+            bool secondaryHit = !secondaryWallCheck 
+                                || Physics2D.Raycast(
+                                    secondaryWallCheck.position, 
+                                    new Vector2(FacingDir, 0f), wallCheckDistance, groundLayer);
+            
+            IsWallDetected = primaryHit && secondaryHit;
+        }
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0f, -groundCheckDistance, 0f));
+        if (forwardGroundCheck) Gizmos.DrawLine(forwardGroundCheck.position, forwardGroundCheck.position + new Vector3(0f, -forwardGroundCheckDistance, 0f));
         if (primaryWallCheck) Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new  Vector3(FacingDir * wallCheckDistance, 0f, 0f));
         if (secondaryWallCheck) Gizmos.DrawLine(secondaryWallCheck.position, secondaryWallCheck.position + new  Vector3(FacingDir * wallCheckDistance, 0f, 0f));
     }

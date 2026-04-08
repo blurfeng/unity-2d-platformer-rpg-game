@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AttackBasicState : PlayerState
+public class PlayerAttackBasicState : PlayerState
 {
     private static readonly int _attackBasicIndex = Animator.StringToHash("attackBasicIndex");
     
@@ -13,7 +13,7 @@ public class AttackBasicState : PlayerState
     private const int ComboIndexStart = 1;
     private int _comboIndexLimit = 3;
     
-    public AttackBasicState(Player player, StateMachine stateMachine) 
+    public PlayerAttackBasicState(Player player, StateMachine stateMachine) 
         : base(player, stateMachine, "AttackBasic", "attackBasic")
     {
     }

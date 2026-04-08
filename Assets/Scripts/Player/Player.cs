@@ -7,23 +7,23 @@ using UnityEngine.InputSystem;
 public class Player : Entity
 {
     public PlayerInputSet PlayerInput { get; private set; }
-    public IdleState IdleState { get; private set; }
+    public PlayerIdleState IdleState { get; private set; }
     public void ChangeToIdleState() => StateMachine?.ChangeState(IdleState);
-    public MoveState MoveState { get; private set; }
+    public PlayerMoveState MoveState { get; private set; }
     public void ChangeToMoveState() => StateMachine?.ChangeState(MoveState);
-    public JumpState JumpState { get; private set; }
+    public PlayerJumpState JumpState { get; private set; }
     public void ChangeToJumpState() => StateMachine?.ChangeState(JumpState);
-    public FallState FallState { get; private set; }
+    public PlayerFallState FallState { get; private set; }
     public void ChangeToFallState() => StateMachine?.ChangeState(FallState);
-    public WallSlideState WallSlideState { get; private set; }
+    public PlayerWallSlideState WallSlideState { get; private set; }
     public void ChangeToWallSlideState() => StateMachine?.ChangeState(WallSlideState);
-    public WallJumpState WallJumpState { get; private set; }
-    public void ChangeToWallJumpState() => StateMachine?.ChangeState(WallJumpState);
-    public DashState DashState { get; private set; }
+    public PlayerWallJumpState PlayerWallJumpState { get; private set; }
+    public void ChangeToWallJumpState() => StateMachine?.ChangeState(PlayerWallJumpState);
+    public PlayerDashState DashState { get; private set; }
     public void ChangeToDashState() => StateMachine?.ChangeState(DashState);
-    public AttackBasicState AttackBasicState { get; private set; }
+    public PlayerAttackBasicState AttackBasicState { get; private set; }
     public void ChangeToAttackBasicState() => StateMachine?.ChangeState(AttackBasicState);
-    public JumpAttackState JumpAttackState { get; private set; }
+    public PlayerJumpAttackState JumpAttackState { get; private set; }
     public void ChangeToJumpAttackState() => StateMachine?.ChangeState(JumpAttackState);
     
     public Vector2 MoveInput  { get; private set; }
@@ -62,15 +62,15 @@ public class Player : Entity
         
         PlayerInput = new PlayerInputSet();
         
-        IdleState = new IdleState(this, StateMachine);
-        MoveState = new MoveState(this, StateMachine);
-        JumpState = new JumpState(this, StateMachine);
-        FallState = new FallState(this, StateMachine);
-        WallSlideState = new WallSlideState(this, StateMachine);
-        WallJumpState = new WallJumpState(this, StateMachine);
-        DashState = new DashState(this, StateMachine);
-        AttackBasicState = new AttackBasicState(this, StateMachine);
-        JumpAttackState = new JumpAttackState(this, StateMachine);
+        IdleState = new PlayerIdleState(this, StateMachine);
+        MoveState = new PlayerMoveState(this, StateMachine);
+        JumpState = new PlayerJumpState(this, StateMachine);
+        FallState = new PlayerFallState(this, StateMachine);
+        WallSlideState = new PlayerWallSlideState(this, StateMachine);
+        PlayerWallJumpState = new PlayerWallJumpState(this, StateMachine);
+        DashState = new PlayerDashState(this, StateMachine);
+        AttackBasicState = new PlayerAttackBasicState(this, StateMachine);
+        JumpAttackState = new PlayerJumpAttackState(this, StateMachine);
     }
 
     protected override void Start()

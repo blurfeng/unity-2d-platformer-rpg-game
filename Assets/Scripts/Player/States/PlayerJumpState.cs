@@ -1,6 +1,6 @@
-﻿public class JumpState : PlayerAiredState
+﻿public class PlayerJumpState : PlayerAiredState
 {
-    public JumpState(Player player, StateMachine stateMachine) 
+    public PlayerJumpState(Player player, StateMachine stateMachine) 
         : base(player, stateMachine, "Jump", "jumpFall")
     {
     }

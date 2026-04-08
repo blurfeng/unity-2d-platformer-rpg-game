@@ -3,9 +3,9 @@
 /// <summary>
 /// 代表实体处于空闲状态的类，继承自EntityState。
 /// </summary>
-public class IdleState : PlayerGroundedState
+public class PlayerIdleState : PlayerGroundedState
 {
-    public IdleState(Player player, StateMachine stateMachine) 
+    public PlayerIdleState(Player player, StateMachine stateMachine) 
         : base(player, stateMachine, "Idle", "idle")
     {
     }
