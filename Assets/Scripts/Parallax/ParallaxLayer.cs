@@ -19,9 +19,9 @@ public class ParallaxLayer
         _imageHalfWidth = _imageWidth / 2f;
     }
     
-    public void Move(float distanceToMove)
+    public void Move(Vector2 distanceToMove)
     {
-        background.position += Vector3.right * (distanceToMove * parallaxMultiplier);
+        background.position += (Vector3)distanceToMove * parallaxMultiplier;
     }
 
     public void LoopBackground(float cameraLeftEdge, float cameraRightEdge)

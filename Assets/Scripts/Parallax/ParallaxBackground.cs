@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
 {
     private Camera _mainCamera;
-    private float _lastCameraPositionX;
+    private Vector2 _lastCameraPosition;
     private float _cameraHalfWidth;
     
     [SerializeField] private ParallaxLayer[] backgroundLayers;
@@ -15,18 +14,19 @@ public class ParallaxBackground : MonoBehaviour
         if (_mainCamera)
         {
             _cameraHalfWidth = _mainCamera.orthographicSize * _mainCamera.aspect;
+            _lastCameraPosition =  _mainCamera.transform.position;
         }
         InitializeLayers();
     }
 
     private void FixedUpdate()
     {
-        float currentCameraPositionX = _mainCamera.transform.position.x;
-        float distanceToMove = currentCameraPositionX - _lastCameraPositionX;
-        _lastCameraPositionX = currentCameraPositionX;
+        Vector2 currentCameraPosition = _mainCamera.transform.position;
+        Vector2 distanceToMove = currentCameraPosition - _lastCameraPosition;
+        _lastCameraPosition = currentCameraPosition;
         
-        float cameraLeftEdge = currentCameraPositionX - _cameraHalfWidth;
-        float cameraRightEdge = currentCameraPositionX + _cameraHalfWidth;
+        float cameraLeftEdge = currentCameraPosition.x - _cameraHalfWidth;
+        float cameraRightEdge = currentCameraPosition.x + _cameraHalfWidth;
 
         foreach (ParallaxLayer layer in backgroundLayers)
         {
