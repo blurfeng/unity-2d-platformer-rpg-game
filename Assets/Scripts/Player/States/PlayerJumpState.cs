@@ -1,4 +1,4 @@
-﻿public class JumpState : AiredState
+﻿public class JumpState : PlayerAiredState
 {
     public JumpState(Player player, StateMachine stateMachine) 
         : base(player, stateMachine, "Jump", "jumpFall")
