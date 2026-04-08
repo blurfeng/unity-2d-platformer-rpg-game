@@ -1,30 +1,25 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-/// <summary>
-/// 实体状态的基类，定义了状态的基本结构和行为。
-/// </summary>
 public abstract class EntityState
 {
     private static readonly int _velocityY = Animator.StringToHash("velocityY");
     protected StateMachine StateMachine { get; private set; }
-    protected Player Player => StateMachine?.Player;
-    protected Vector2 MoveInput => Player?.MoveInput ?? Vector2.zero;
-    protected PlayerInputSet Input => Player?.PlayerInput;
-    protected Animator Animator => Player?.Animator;
+
     protected string StateName { get; private set; }
     protected string AnimBoolName { get; private set; }
-    protected Rigidbody2D Rb => Player?.Rb;
+    public Animator Animator { get; protected set; }
+    public Rigidbody2D Rb { get; protected set; }
 
     protected float stateTimer;
     protected bool triggerCalled;
-    
+
     protected EntityState(StateMachine stateMachine, string stateName, string animBoolName)
     {
         StateMachine = stateMachine;
         StateName = stateName;
         AnimBoolName = animBoolName;
     }
-
+    
     public virtual void Enter()
     {
         // 当状态改变时，新状态进入时执行的逻辑
@@ -41,34 +36,18 @@ public abstract class EntityState
         
         Animator.SetBool(AnimBoolName, false);
     }
-
-    public void CallAnimationTrigger()
-    {
-        triggerCalled = true;
-    }
     
     public virtual void Update(float deltaTime)
     {
         // 在状态更新时执行的逻辑
         // Debug.Log($"Updating state: {StateName}.");
         Animator.SetFloat(_velocityY, Rb.linearVelocity.y);
-
-        if (Input.Player.Dash.WasPressedThisFrame() && CanDash())
-        {
-            Player.ChangeToDashState();
-        }
         
         stateTimer -= deltaTime;
     }
 
-    private bool CanDash()
+    public void CallAnimationTrigger()
     {
-        if (Player.IsWallDetected)
-            return false;
-        
-        if (StateMachine.CurrentState == Player.DashState)
-            return false;
-        
-        return true;
+        triggerCalled = true;
     }
 }

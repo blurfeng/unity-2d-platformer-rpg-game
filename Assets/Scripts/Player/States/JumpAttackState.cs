@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-public class JumpAttackState : EntityState
+public class JumpAttackState : PlayerState
 {
     private bool _touchedGround;
     private static readonly int _jumpAttackTrigger = Animator.StringToHash("jumpAttackTrigger");
 
-    public JumpAttackState(StateMachine stateMachine) : base(stateMachine, "JumpAttack", "jumpAttack")
+    public JumpAttackState(Player player, StateMachine stateMachine) 
+        : base(player, stateMachine, "JumpAttack", "jumpAttack")
     {
     }
 

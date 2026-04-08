@@ -5,7 +5,8 @@
 /// </summary>
 public class MoveState : GroundedState
 {
-    public MoveState(StateMachine stateMachine) : base(stateMachine, "Move", "move")
+    public MoveState(Player player, StateMachine stateMachine) 
+        : base(player, stateMachine, "Move", "move")
     {
     }
 

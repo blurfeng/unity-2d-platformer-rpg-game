@@ -1,6 +1,7 @@
 ﻿public class FallState : AiredState
 {
-    public FallState(StateMachine stateMachine) : base(stateMachine, "Fall", "jumpFall")
+    public FallState(Player player, StateMachine stateMachine) 
+        : base(player, stateMachine, "Fall", "jumpFall")
     {
     }
 

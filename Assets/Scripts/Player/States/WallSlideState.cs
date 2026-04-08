@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-public class WallSlideState : EntityState
+public class WallSlideState : PlayerState
 {
-    public WallSlideState(StateMachine stateMachine) : base(stateMachine, "WallSlide", "wallSlide")
+    public WallSlideState(Player player, StateMachine stateMachine) 
+        : base(player, stateMachine, "WallSlide", "wallSlide")
     {
     }
 

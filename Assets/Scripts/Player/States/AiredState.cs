@@ -1,6 +1,7 @@
-﻿public abstract class AiredState : EntityState
+﻿public abstract class AiredState : PlayerState
 {
-    public AiredState(StateMachine stateMachine, string stateName, string animBoolName) : base(stateMachine, stateName, animBoolName)
+    public AiredState(Player player, StateMachine stateMachine, string stateName, string animBoolName) 
+        : base(player, stateMachine, stateName, animBoolName)
     {
     }
 

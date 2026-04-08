@@ -5,7 +5,8 @@
 /// </summary>
 public class IdleState : GroundedState
 {
-    public IdleState(StateMachine stateMachine) : base(stateMachine, "Idle", "idle")
+    public IdleState(Player player, StateMachine stateMachine) 
+        : base(player, stateMachine, "Idle", "idle")
     {
     }
 

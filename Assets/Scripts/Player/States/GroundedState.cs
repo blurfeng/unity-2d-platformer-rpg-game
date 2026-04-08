@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-public abstract class GroundedState : EntityState
+public abstract class GroundedState : PlayerState
 {
-    protected GroundedState(StateMachine stateMachine, string stateName, string animBoolName) : base(stateMachine, stateName, animBoolName)
+    protected GroundedState(Player player, StateMachine stateMachine, string stateName, string animBoolName) 
+        : base(player, stateMachine, stateName, animBoolName)
     {
     }
 

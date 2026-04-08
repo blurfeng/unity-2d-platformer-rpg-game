@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-public class DashState : EntityState
+public class DashState : PlayerState
 {
     private float _originalGravityScale;
     private int _dashDir;
     
-    public DashState(StateMachine stateMachine) : base(stateMachine, "Dash", "dash")
+    public DashState(Player player, StateMachine stateMachine) 
+        : base(player, stateMachine, "Dash", "dash")
     {
     }
 
