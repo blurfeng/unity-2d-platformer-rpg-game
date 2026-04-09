@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+    public static event Action<Player> OnPlayerDeath;
+    
     public PlayerInputSet PlayerInput { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
     public void ChangeToIdleState() => StateMachine?.ChangeState(IdleState);
@@ -25,6 +25,8 @@ public class Player : Entity
     public void ChangeToAttackBasicState() => StateMachine?.ChangeState(AttackBasicState);
     public PlayerJumpAttackState JumpAttackState { get; private set; }
     public void ChangeToJumpAttackState() => StateMachine?.ChangeState(JumpAttackState);
+    public PlayerDeadState DeadState { get; private set; }
+    public void ChangeToDeadState() => StateMachine?.ChangeState(DeadState);
     
     public Vector2 MoveInput  { get; private set; }
     public bool HasMoveInput => MoveInput != Vector2.zero;
@@ -55,6 +57,8 @@ public class Player : Entity
     [Space]
     public float dashDuration = 0.25f;
     public float dashSpeed = 20f;
+    
+    public bool IsDead() => StateMachine.CheckCurrentState(DeadState);
 
     protected override void Awake()
     {
@@ -71,6 +75,7 @@ public class Player : Entity
         DashState = new PlayerDashState(this, StateMachine);
         AttackBasicState = new PlayerAttackBasicState(this, StateMachine);
         JumpAttackState = new PlayerJumpAttackState(this, StateMachine);
+        DeadState = new PlayerDeadState(this, StateMachine);
     }
 
     protected override void Start()
@@ -99,7 +104,16 @@ public class Player : Entity
         
         PlayerInput.Disable();
     }
-    
+
+    public override void Death()
+    {
+        base.Death();
+        
+        ChangeToDeadState();
+        
+        OnPlayerDeath?.Invoke(this);
+    }
+
     public void EnterAttackStateWithDelay()
     {
         if (_attackQueueCo != null)

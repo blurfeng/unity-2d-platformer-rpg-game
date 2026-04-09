@@ -30,7 +30,7 @@ public abstract class Enemy : Entity
     [SerializeField] private Transform playerCheck;
     [SerializeField] private float playerCheckDistance = 10f;
     
-    public Transform Player { get; private set; }
+    public Player Player { get; private set; }
 
     protected override void Awake()
     {
@@ -63,16 +63,19 @@ public abstract class Enemy : Entity
             || StateMachine.CheckCurrentState(AttackState))
             return;
         
-        Player = player;
+        Player = player.GetComponent<Player>();
         ChangeToBattleState();
     }
 
     public Transform GetPlayerReference()
     {
-        if (!Player)
-            Player = PlayerDetected().transform;
+        if (Player.IsDead())
+            return null;
         
-        return Player;
+        if (!Player)
+            return PlayerDetected().transform;
+        
+        return Player.transform;
     }
 
     public RaycastHit2D PlayerDetected()

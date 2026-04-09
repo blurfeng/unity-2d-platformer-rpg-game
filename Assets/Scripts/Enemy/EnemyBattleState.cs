@@ -31,23 +31,31 @@ public class EnemyBattleState : EnemyState
     {
         base.Update(deltaTime);
 
-        if (Enemy.PlayerDetected())
-            UpdateBattleTimer();
-
         // 当玩家离开战斗范围时，敌人会在一段时间后切换回空闲状态；如果玩家进入攻击范围，敌人会切换到攻击状态；否则，敌人会继续追踪玩家。
         if (BattleTimeIsOver())
         {
             Enemy.ChangeToIdleState();
         }
-        // 当玩家进入攻击范围时，敌人会切换到攻击状态。
-        else if (WithinAttackRange() && Enemy.PlayerDetected())
+
+        // 如果玩家存在，敌人会持续追踪玩家，并在进入攻击范围时切换到攻击状态；如果玩家不存在，敌人会切换回空闲状态。
+        if (Enemy.GetPlayerReference())
         {
-            Enemy.ChangeToAttackState();
+            UpdateBattleTimer();
+            
+            // 当玩家进入攻击范围时，敌人会切换到攻击状态。
+            if (WithinAttackRange())
+            {
+                Enemy.ChangeToAttackState();
+            }
+            // 持续追踪玩家。
+            else
+            {
+                Enemy.SetVelocityX(Enemy.battleMoveSpeed * DirectionToPlayer());
+            }
         }
-        // 持续追踪玩家。
         else
         {
-            Enemy.SetVelocityX(Enemy.battleMoveSpeed * DirectionToPlayer());
+            Enemy.ChangeToIdleState();
         }
     }
 
