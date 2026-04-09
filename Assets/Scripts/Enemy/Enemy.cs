@@ -10,6 +10,8 @@ public abstract class Enemy : Entity
     public void ChangeToAttackState() => StateMachine?.ChangeState(AttackState);
     public EnemyBattleState BattleState { get; private set; }
     public void ChangeToBattleState() => StateMachine?.ChangeState(BattleState);
+    public EnemyDeadState DeadState { get; private set; }
+    public void ChangeToDeadState() => StateMachine?.ChangeState(DeadState);
 
     [Header("Battle")] 
     public float battleMoveSpeed = 3f;
@@ -38,6 +40,7 @@ public abstract class Enemy : Entity
         MoveState = new EnemyMoveState(this, StateMachine);
         AttackState = new EnemyAttackState(this, StateMachine);
         BattleState = new EnemyBattleState(this, StateMachine);
+        DeadState = new EnemyDeadState(this, StateMachine);
     }
 
     protected override void Start()
@@ -45,6 +48,13 @@ public abstract class Enemy : Entity
         base.Start();
         
         StateMachine.Initialize(IdleState);
+    }
+
+    public override void Death()
+    {
+        base.Death();
+        
+        ChangeToDeadState();
     }
 
     public void TryEnterBattleState(Transform player)

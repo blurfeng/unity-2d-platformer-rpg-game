@@ -68,6 +68,11 @@ public abstract class Entity : MonoBehaviour
     {
         StateMachine.CurrentState.AnimationTrigger();
     }
+
+    public virtual void Death()
+    {
+        
+    } 
     
     public void ReceiveKnockback(Vector2 force, float duration)
     {

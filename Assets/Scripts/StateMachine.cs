@@ -7,8 +7,11 @@ public class StateMachine
     /// </summary>
     public EntityState CurrentState { get; private set; }
     
+    public bool canChangeState;
+    
     public void Initialize(EntityState state)
     {
+        canChangeState = true;
         ChangeState(state);
     }
 
@@ -19,6 +22,9 @@ public class StateMachine
 
     public void ChangeState(EntityState state)
     {
+        if (!canChangeState)
+            return;
+        
         if (CurrentState != null)
         {
             CurrentState.Exit();
@@ -37,4 +43,9 @@ public class StateMachine
     {
         return CurrentState == state;
     }
+    
+    /// <summary>
+    /// 禁止状态机切换状态。
+    /// </summary>
+    public void SwitchOffStateMachine() => canChangeState = false;
 }

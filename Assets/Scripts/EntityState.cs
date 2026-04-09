@@ -24,12 +24,14 @@ public abstract class EntityState
     {
         triggerCalled = false;
         
-        Animator.SetBool(AnimBoolName, true);
+        if (!string.IsNullOrEmpty(AnimBoolName))
+            Animator.SetBool(AnimBoolName, true);
     }
     
     public virtual void Exit()
     {
-        Animator.SetBool(AnimBoolName, false);
+        if (!string.IsNullOrEmpty(AnimBoolName))
+            Animator.SetBool(AnimBoolName, false);
     }
     
     public virtual void Update(float deltaTime)
