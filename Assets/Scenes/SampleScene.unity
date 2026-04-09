@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 314344589}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32711,9 +32711,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1918837895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 262c1613bfc94250b738d4879c3c8f4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 67da70bdcdc34143b4c514ca368c1ce8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 100
   isDead: 0
 --- !u!1660057539 &9223372036854775807

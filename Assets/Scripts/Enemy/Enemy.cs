@@ -27,6 +27,8 @@ public abstract class Enemy : Entity
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Transform playerCheck;
     [SerializeField] private float playerCheckDistance = 10f;
+    
+    public Transform Player { get; private set; }
 
     protected override void Awake()
     {
@@ -43,6 +45,24 @@ public abstract class Enemy : Entity
         base.Start();
         
         StateMachine.Initialize(IdleState);
+    }
+
+    public void TryEnterBattleState(Transform player)
+    {
+        if (StateMachine.CheckCurrentState(BattleState) 
+            || StateMachine.CheckCurrentState(AttackState))
+            return;
+        
+        Player = player;
+        ChangeToBattleState();
+    }
+
+    public Transform GetPlayerReference()
+    {
+        if (!Player)
+            Player = PlayerDetected().transform;
+        
+        return Player;
     }
 
     public RaycastHit2D PlayerDetected()

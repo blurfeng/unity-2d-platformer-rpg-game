@@ -33,7 +33,7 @@ public class StateMachine
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>
-    public bool CheckCurrentState(PlayerState state)
+    public bool CheckCurrentState(EntityState state)
     {
         return CurrentState == state;
     }

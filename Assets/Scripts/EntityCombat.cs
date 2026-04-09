@@ -16,7 +16,7 @@ public class EntityCombat : MonoBehaviour
             EntityHealth entityHealth = co.GetComponent<EntityHealth>();
             if (entityHealth)
             {
-                entityHealth.TakeDamage(damage);
+                entityHealth.TakeDamage(damage, transform);
             }
         }
     }
