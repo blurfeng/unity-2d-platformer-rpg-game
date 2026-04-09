@@ -1,8 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EntityCombat : MonoBehaviour
 {
+    public float damage = 10f;
+    
     [Header("Target detection")]
     [SerializeField] private Transform targetCheck;
     [SerializeField] private float targetCHeckRadius = 1f;
@@ -12,7 +13,11 @@ public class EntityCombat : MonoBehaviour
     {
         foreach (Collider2D co in GetDetectedColliders())
         {
-            Debug.Log("Attacked " + co.name);
+            EntityHealth entityHealth = co.GetComponent<EntityHealth>();
+            if (entityHealth)
+            {
+                entityHealth.TakeDamage(damage);
+            }
         }
     }
 
