@@ -13,10 +13,10 @@ public class EntityCombat : MonoBehaviour
     {
         foreach (Collider2D co in GetDetectedColliders())
         {
-            EntityHealth entityHealth = co.GetComponent<EntityHealth>();
-            if (entityHealth)
+            IDamageable damageable = co.GetComponent<IDamageable>();
+            if (damageable != null)
             {
-                entityHealth.TakeDamage(damage, transform);
+                damageable.TakeDamage(damage, transform);
             }
         }
     }

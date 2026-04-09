@@ -69,7 +69,7 @@ public abstract class Enemy : Entity
 
     public Transform GetPlayerReference()
     {
-        if (Player.IsDead())
+        if (Player && Player.IsDead())
             return null;
         
         if (!Player)
