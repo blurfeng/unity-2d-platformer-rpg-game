@@ -10,9 +10,9 @@ public abstract class Entity : MonoBehaviour
     public int FacingDir { get; private set; } = 1;
 
     [Header("Collision detection")]
+    [SerializeField] protected LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 1.1f;
     [SerializeField] private float wallCheckDistance = 0.4f;
-    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform forwardGroundCheck;
     [SerializeField] private float forwardGroundCheckDistance = 1.1f;
     [SerializeField] private Transform primaryWallCheck;
@@ -60,9 +60,9 @@ public abstract class Entity : MonoBehaviour
         StateMachine.Update(Time.deltaTime);
     }
 
-    public void CallAnimationTrigger()
+    public void CurrentStateAnimationTrigger()
     {
-        StateMachine.CurrentState.CallAnimationTrigger();
+        StateMachine.CurrentState.AnimationTrigger();
     }
     
     public void SetVelocity(float velocityX, float velocityY)
@@ -97,7 +97,7 @@ public abstract class Entity : MonoBehaviour
         Rb.linearVelocity = Vector2.zero;
     }
 
-    private void HandleFlip(float velocityX)
+    public void HandleFlip(float velocityX)
     {
         if (facingRight && velocityX < 0)
         {
@@ -141,7 +141,7 @@ public abstract class Entity : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0f, -groundCheckDistance, 0f));
         if (forwardGroundCheck) Gizmos.DrawLine(forwardGroundCheck.position, forwardGroundCheck.position + new Vector3(0f, -forwardGroundCheckDistance, 0f));

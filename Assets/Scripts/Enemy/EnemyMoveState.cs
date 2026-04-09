@@ -1,4 +1,4 @@
-﻿public class EnemyMoveState : EnemyState
+﻿public class EnemyMoveState : EnemyGroundedState
 {
     public EnemyMoveState(Enemy enemy, StateMachine stateMachine) 
         : base(enemy, stateMachine, "Move", "move")

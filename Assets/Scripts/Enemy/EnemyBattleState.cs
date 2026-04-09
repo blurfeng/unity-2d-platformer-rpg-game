@@ -1,0 +1,87 @@
+﻿using UnityEngine;
+
+public class EnemyBattleState : EnemyState
+{
+    private Transform _playerTransform;
+    private float _lastTimeWatInBattle;
+    
+    public EnemyBattleState(Enemy enemy, StateMachine stateMachine) 
+        : base(enemy, stateMachine, "Battle", "battle")
+    {
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        
+        if (!_playerTransform)
+            _playerTransform = Enemy.PlayerDetected().transform;
+
+        if (ShouldRetreat())
+        {
+            float direction = DirectionToPlayer();
+            Enemy.SetVelocity(Enemy.retreatVelocity.x * -direction, Enemy.retreatVelocity.y);
+            Enemy.HandleFlip(direction);
+        }
+    }
+
+    public override void Update(float deltaTime)
+    {
+        base.Update(deltaTime);
+
+        if (Enemy.PlayerDetected())
+            UpdateBattleTimer();
+
+        // 当玩家离开战斗范围时，敌人会在一段时间后切换回空闲状态；如果玩家进入攻击范围，敌人会切换到攻击状态；否则，敌人会继续追踪玩家。
+        if (BattleTimeIsOver())
+        {
+            Enemy.ChangeToIdleState();
+        }
+        // 当玩家进入攻击范围时，敌人会切换到攻击状态。
+        else if (WithinAttackRange() && Enemy.PlayerDetected())
+        {
+            Enemy.ChangeToAttackState();
+        }
+        // 持续追踪玩家。
+        else
+        {
+            Enemy.SetVelocityX(Enemy.battleMoveSpeed * DirectionToPlayer());
+        }
+    }
+
+    private void UpdateBattleTimer() => _lastTimeWatInBattle = Time.time;
+
+    private bool BattleTimeIsOver() => Time.time > _lastTimeWatInBattle + Enemy.battleTimeDuration;
+
+    /// <summary>
+    /// 在战斗状态中，敌人会持续追踪玩家，并在进入攻击范围时切换到攻击状态。
+    /// </summary>
+    /// <returns></returns>
+    private bool WithinAttackRange() => DistanceToPlayer() < Enemy.attackDistance;
+    
+    private bool ShouldRetreat() => DistanceToPlayer() < Enemy.minRetreatDistance;
+
+    /// <summary>
+    /// 计算敌人与玩家之间的水平距离。
+    /// </summary>
+    /// <returns></returns>
+    private float DistanceToPlayer()
+    {
+        if (!_playerTransform)
+            return float.MaxValue;
+        
+        return Mathf.Abs(_playerTransform.position.x - Enemy.transform.position.x);
+    }
+    
+    /// <summary>
+    /// 计算敌人朝向玩家的方向，返回1表示朝右，-1表示朝左。
+    /// </summary>
+    /// <returns></returns>
+    private int DirectionToPlayer()
+    {
+        if (!_playerTransform)
+            return 0;
+        
+        return _playerTransform.position.x > Enemy.transform.position.x ? 1 : -1;
+    }
+}

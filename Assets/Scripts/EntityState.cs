@@ -22,8 +22,6 @@ public abstract class EntityState
     
     public virtual void Enter()
     {
-        // 当状态改变时，新状态进入时执行的逻辑
-        // Debug.Log($"Entering state: {StateName}.");
         triggerCalled = false;
         
         Animator.SetBool(AnimBoolName, true);
@@ -31,23 +29,22 @@ public abstract class EntityState
     
     public virtual void Exit()
     {
-        // 当状态改变时，旧状态退出时执行的逻辑
-        // Debug.Log($"Exiting state: {StateName}.");
-        
         Animator.SetBool(AnimBoolName, false);
     }
     
     public virtual void Update(float deltaTime)
     {
-        // 在状态更新时执行的逻辑
-        // Debug.Log($"Updating state: {StateName}.");
-        Animator.SetFloat(_velocityY, Rb.linearVelocity.y);
-        
         stateTimer -= deltaTime;
+        UpdateAnimationParams();
     }
 
-    public void CallAnimationTrigger()
+    public void AnimationTrigger()
     {
         triggerCalled = true;
+    }
+
+    public virtual void UpdateAnimationParams()
+    {
+        Animator.SetFloat(_velocityY, Rb.linearVelocity.y);
     }
 }
