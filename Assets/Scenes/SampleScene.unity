@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 314344586}
   - component: {fileID: 314344590}
   - component: {fileID: 314344591}
+  - component: {fileID: 314344592}
   - component: {fileID: 314344588}
   - component: {fileID: 314344589}
   m_Layer: 7
@@ -509,6 +510,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
   maxHealth: 100
   isDead: 0
+--- !u!114 &314344592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314344585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fddcfeb1e4e39a240a8403439fd58319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityVFX
+  onDamageMaterial: {fileID: 2100000, guid: e7a8862b2a03fd4449fb12a7d7f90bcf, type: 2}
+  onDamageVfxDuration: 0.15
 --- !u!1 &337745492
 GameObject:
   m_ObjectHideFlags: 0
@@ -32560,6 +32575,7 @@ GameObject:
   - component: {fileID: 1918837898}
   - component: {fileID: 1918837900}
   - component: {fileID: 1918837901}
+  - component: {fileID: 1918837902}
   m_Layer: 8
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -32716,6 +32732,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 100
   isDead: 0
+--- !u!114 &1918837902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918837895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fddcfeb1e4e39a240a8403439fd58319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityVFX
+  onDamageMaterial: {fileID: 2100000, guid: e7a8862b2a03fd4449fb12a7d7f90bcf, type: 2}
+  onDamageVfxDuration: 0.15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
