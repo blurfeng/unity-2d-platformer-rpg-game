@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
@@ -33,6 +34,9 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     public bool IsWallDetected {get; private set;}
 
+    private bool _isKnocked;
+    private Coroutine _knockbackCoroutine;
+
     protected virtual void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
@@ -65,21 +69,47 @@ public abstract class Entity : MonoBehaviour
         StateMachine.CurrentState.AnimationTrigger();
     }
     
+    public void ReceiveKnockback(Vector2 force, float duration)
+    {
+        if (_knockbackCoroutine != null)
+            StopCoroutine(_knockbackCoroutine);
+        
+        _knockbackCoroutine = StartCoroutine(Knockback(force, duration));
+    }
+
+    private IEnumerator Knockback(Vector2 force, float duration)
+    {
+        _isKnocked = true;
+        Rb.linearVelocity = force;
+        
+        yield return new WaitForSeconds(duration);
+        
+        ClearVelocity();
+        _isKnocked = false;
+    }
+    
     public void SetVelocity(float velocityX, float velocityY)
     {
+        if (_isKnocked)
+            return;
+        
         Rb.linearVelocity = new  Vector2(velocityX, velocityY);
         HandleFlip(velocityX);
     }
     
     public void SetVelocityX(float velocityX)
     {
-        Rb.linearVelocity = new  Vector2(velocityX, Rb.linearVelocity.y);
-        HandleFlip(velocityX);
+        SetVelocity(velocityX, Rb.linearVelocity.y);
     }
 
     public void SetVelocityY(float velocityY)
     {
-        Rb.linearVelocity = new  Vector2(Rb.linearVelocity.x, velocityY);
+        SetVelocity(Rb.linearVelocity.x, velocityY);
+    }
+    
+    public void ClearVelocity()
+    {
+        Rb.linearVelocity = Vector2.zero;
     }
 
     public void ClearVelocityX()
@@ -90,11 +120,6 @@ public abstract class Entity : MonoBehaviour
     public void ClearVelocityY()
     {
         Rb.linearVelocity = new  Vector2(Rb.linearVelocity.x, 0f);
-    }
-    
-    public void ClearVelocity()
-    {
-        Rb.linearVelocity = Vector2.zero;
     }
 
     public void HandleFlip(float velocityX)
