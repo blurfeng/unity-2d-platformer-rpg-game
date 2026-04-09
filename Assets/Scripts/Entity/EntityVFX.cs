@@ -13,7 +13,7 @@ public class EntityVFX : MonoBehaviour
     private Material _originalMaterial;
     private Coroutine _onDamageVfxCoroutine;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _originalMaterial = _spriteRenderer.material;

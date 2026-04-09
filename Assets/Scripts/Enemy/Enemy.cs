@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Enemy : Entity
+public abstract class Enemy : Entity, ICounterable
 {
     public EnemyIdleState IdleState { get; private set; }
     public void ChangeToIdleState() => StateMachine?.ChangeState(IdleState);
@@ -12,6 +12,8 @@ public abstract class Enemy : Entity
     public void ChangeToBattleState() => StateMachine?.ChangeState(BattleState);
     public EnemyDeadState DeadState { get; private set; }
     public void ChangeToDeadState() => StateMachine?.ChangeState(DeadState);
+    public EnemyStunnedState StunnedState { get; private set; }
+    public void ChangeToStunnedState() => StateMachine?.ChangeState(StunnedState);
 
     [Header("Battle")] 
     public float battleMoveSpeed = 3f;
@@ -20,6 +22,11 @@ public abstract class Enemy : Entity
     public float minRetreatDistance = 1f;
     public Vector2 retreatVelocity = new Vector2(5f, 3f);
 
+    [Header("Stunned")]
+    public float stunnedDuration = 1f;
+    public Vector2 stunnedVelocity = new Vector2(7f, 7f);
+    protected bool canBeStunned = false;
+    
     [Header("Movement")] 
     public float idleTime = 2f;
     public float moveSpeed = 1.4f;
@@ -41,6 +48,7 @@ public abstract class Enemy : Entity
         AttackState = new EnemyAttackState(this, StateMachine);
         BattleState = new EnemyBattleState(this, StateMachine);
         DeadState = new EnemyDeadState(this, StateMachine);
+        StunnedState = new EnemyStunnedState(this, StateMachine);
     }
 
     protected override void Start()
@@ -48,6 +56,15 @@ public abstract class Enemy : Entity
         base.Start();
         
         StateMachine.Initialize(IdleState);
+    }
+
+    /// <summary>
+    /// 开关允许被反击击晕。
+    /// </summary>
+    /// <param name="enable"></param>
+    public void EnableCounterWindow(bool enable)
+    {
+        canBeStunned = enable;
     }
 
     public override void Death()
@@ -101,5 +118,10 @@ public abstract class Enemy : Entity
             Gizmos.color = Color.green;
             Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + FacingDir * minRetreatDistance, playerCheck.position.y));
         }
+    }
+
+    public virtual void HandleCounter()
+    {
+        
     }
 }
