@@ -17,7 +17,7 @@ public class EnemyBattleState : EnemyState
         UpdateBattleTimer();
         
         if (!_playerTransform)
-            _playerTransform = Enemy.GetPlayerReference();
+            _playerTransform = Enemy.GetPlayerReference(out bool isDetected);
 
         if (ShouldRetreat())
         {
@@ -38,9 +38,12 @@ public class EnemyBattleState : EnemyState
         }
 
         // 如果玩家存在，敌人会持续追踪玩家，并在进入攻击范围时切换到攻击状态；如果玩家不存在，敌人会切换回空闲状态。
-        if (Enemy.GetPlayerReference())
+        if (Enemy.GetPlayerReference(out bool isDetected))
         {
-            UpdateBattleTimer();
+            // 如果玩家被检测到，更新战斗计时器。
+            // 这样当玩家离开视线一段时间后，敌人会切换回空闲状态。
+            if (isDetected)
+                UpdateBattleTimer();
             
             // 当玩家进入攻击范围时，敌人会切换到攻击状态。
             if (WithinAttackRange())
@@ -69,6 +72,10 @@ public class EnemyBattleState : EnemyState
     /// <returns></returns>
     private bool WithinAttackRange() => DistanceToPlayer() < Enemy.attackDistance;
     
+    /// <summary>
+    /// 在战斗状态中，如果玩家距离敌人过近，敌人会选择后退以保持一定的距离。
+    /// </summary>
+    /// <returns></returns>
     private bool ShouldRetreat() => DistanceToPlayer() < Enemy.minRetreatDistance;
 
     /// <summary>

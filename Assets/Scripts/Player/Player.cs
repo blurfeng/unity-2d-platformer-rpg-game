@@ -27,6 +27,8 @@ public class Player : Entity
     public void ChangeToJumpAttackState() => StateMachine?.ChangeState(JumpAttackState);
     public PlayerDeadState DeadState { get; private set; }
     public void ChangeToDeadState() => StateMachine?.ChangeState(DeadState);
+    public PlayerAttackCounterState AttackCounterState { get; private set; }
+    public void ChangeToAttackCounterState() => StateMachine?.ChangeState(AttackCounterState);
     
     public Vector2 MoveInput  { get; private set; }
     public bool HasMoveInput => MoveInput != Vector2.zero;
@@ -76,6 +78,7 @@ public class Player : Entity
         AttackBasicState = new PlayerAttackBasicState(this, StateMachine);
         JumpAttackState = new PlayerJumpAttackState(this, StateMachine);
         DeadState = new PlayerDeadState(this, StateMachine);
+        AttackCounterState = new PlayerAttackCounterState(this, StateMachine);
     }
 
     protected override void Start()

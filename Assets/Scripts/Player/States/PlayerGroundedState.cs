@@ -33,5 +33,9 @@ public abstract class PlayerGroundedState : PlayerState
         {
             Player.ChangeToAttackBasicState();
         }
+        else if (Input.Player.AttackCounter.WasPerformedThisFrame())
+        {
+            Player.ChangeToAttackCounterState();
+        }
     }
 }

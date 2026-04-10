@@ -17,7 +17,8 @@ public class EnemyStunnedState : EnemyState
         _enemyVFX.EnableAttackAlert(false);
         Enemy.EnableCounterWindow(false);
         stateTimer = Enemy.stunnedDuration;
-        Enemy.SetVelocity(Enemy.stunnedVelocity.x * -Enemy.FacingDir, Enemy.stunnedVelocity.y);
+        // 被击飞，不需要转向。
+        Enemy.SetVelocity(Enemy.stunnedVelocity.x * -Enemy.FacingDir, Enemy.stunnedVelocity.y, false);
     }
 
     public override void Update(float deltaTime)

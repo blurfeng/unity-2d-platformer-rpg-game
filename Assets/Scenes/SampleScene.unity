@@ -438,7 +438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 314344587}
   - component: {fileID: 314344586}
-  - component: {fileID: 314344590}
+  - component: {fileID: 314344593}
   - component: {fileID: 314344591}
   - component: {fileID: 314344592}
   - component: {fileID: 314344588}
@@ -569,24 +569,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.7, y: 2}
   m_Direction: 0
---- !u!114 &314344590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314344585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f4dd4a68e4f45ae812a879cd0dd9e59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityCombat
-  damage: 35
-  targetCheck: {fileID: 627409140}
-  targetCHeckRadius: 1
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!114 &314344591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,6 +602,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityVFX
   onDamageMaterial: {fileID: 2100000, guid: e7a8862b2a03fd4449fb12a7d7f90bcf, type: 2}
   onDamageVfxDuration: 0.15
+--- !u!114 &314344593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314344585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfdc045eddc84512aab014c17d42bfb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  damage: 35
+  targetCheck: {fileID: 627409140}
+  targetCHeckRadius: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  counterRecovery: 0.25
 --- !u!1 &337745492
 GameObject:
   m_ObjectHideFlags: 0

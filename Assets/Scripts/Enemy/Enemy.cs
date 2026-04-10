@@ -84,13 +84,18 @@ public abstract class Enemy : Entity, ICounterable
         ChangeToBattleState();
     }
 
-    public Transform GetPlayerReference()
+    public Transform GetPlayerReference(out bool isDetected)
     {
+        isDetected = false;
+        
         if (Player && Player.IsDead())
             return null;
-        
+
         if (!Player)
-            return PlayerDetected().transform;
+        {
+            Player = PlayerDetected().transform.GetComponent<Player>();
+            isDetected = Player;
+        }
         
         return Player.transform;
     }
@@ -119,6 +124,8 @@ public abstract class Enemy : Entity, ICounterable
             Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + FacingDir * minRetreatDistance, playerCheck.position.y));
         }
     }
+
+    public bool CanBeCountered => canBeStunned;
 
     public virtual void HandleCounter()
     {

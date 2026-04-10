@@ -1,10 +1,11 @@
-﻿public class EnemySkeleton : Enemy
+﻿
+public class EnemySkeleton : Enemy
 {
     public override void HandleCounter()
     {
         base.HandleCounter();
         
-        if (!canBeStunned)
+        if (!CanBeCountered)
             return;
         
         ChangeToStunnedState();

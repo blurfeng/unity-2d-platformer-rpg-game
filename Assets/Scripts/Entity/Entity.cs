@@ -93,13 +93,21 @@ public abstract class Entity : MonoBehaviour
         _isKnocked = false;
     }
     
-    public void SetVelocity(float velocityX, float velocityY)
+    /// <summary>
+    /// 设置实体的速度，可以选择是否根据水平速度处理翻转。
+    /// </summary>
+    /// <param name="velocityX"></param>
+    /// <param name="velocityY"></param>
+    /// <param name="handleFlip">是否根据水平速度处理翻转，默认为false。</param>
+    public void SetVelocity(float velocityX, float velocityY, bool handleFlip = true)
     {
         if (_isKnocked)
             return;
         
         Rb.linearVelocity = new  Vector2(velocityX, velocityY);
-        HandleFlip(velocityX);
+        
+        if (handleFlip)
+            HandleFlip(velocityX);
     }
     
     public void SetVelocityX(float velocityX)
