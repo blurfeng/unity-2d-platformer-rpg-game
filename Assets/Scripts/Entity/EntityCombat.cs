@@ -9,6 +9,13 @@ public class EntityCombat : MonoBehaviour
     [SerializeField] private float targetCHeckRadius = 1f;
     [SerializeField] private LayerMask targetLayer;
     
+    private EntityVFX _entityVFX;
+
+    private void Awake()
+    {
+        _entityVFX = GetComponent<EntityVFX>();
+    }
+    
     public void PerformAttack()
     {
         foreach (Collider2D co in GetDetectedColliders())
@@ -17,6 +24,7 @@ public class EntityCombat : MonoBehaviour
             if (damageable != null)
             {
                 damageable.TakeDamage(damage, transform);
+                _entityVFX.CreateHitVfx(co.transform);
             }
         }
     }
