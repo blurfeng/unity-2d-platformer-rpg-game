@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
+    public event Action OnFlipped;
+    
     public Animator Animator { get; private set; }
     public Rigidbody2D Rb { get; private set; }
     public StateMachine StateMachine { get; private set; }
@@ -98,7 +101,7 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     /// <param name="velocityX"></param>
     /// <param name="velocityY"></param>
-    /// <param name="handleFlip">是否根据水平速度处理翻转，默认为false。</param>
+    /// <param name="handle1">是否根据水平速度处理翻转，默认为false。</param>
     public void SetVelocity(float velocityX, float velocityY, bool handleFlip = true)
     {
         if (_isKnocked)
@@ -152,6 +155,8 @@ public abstract class Entity : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
         facingRight = !facingRight;
         FacingDir = facingRight ? 1 : -1;
+        
+        OnFlipped?.Invoke();
     }
 
     private void HandleCollisionDetected()

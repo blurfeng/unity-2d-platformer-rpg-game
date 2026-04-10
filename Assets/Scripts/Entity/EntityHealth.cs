@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class EntityHealth : MonoBehaviour, IDamageable
 {
@@ -18,11 +19,16 @@ public class EntityHealth : MonoBehaviour, IDamageable
     private Entity _entity;
     private float _currentHealth;
 
+    private Slider _healthBar;
+
     protected virtual void Awake()
     {
         _entityVFX = gameObject.GetComponent<EntityVFX>();
         _entity = GetComponent<Entity>();
+        _healthBar = GetComponentInChildren<Slider>();
+        
         _currentHealth = maxHealth;
+        UpdateHealthBar();
     }
 
     public virtual void TakeDamage(float damage, Transform damageDealer)
@@ -41,9 +47,17 @@ public class EntityHealth : MonoBehaviour, IDamageable
     protected void ReduceHealth(float damage)
     {
         _currentHealth -= damage;
+        UpdateHealthBar();
         
         if (_currentHealth <= 0)
             Die();
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (!_healthBar) return;
+        
+        _healthBar.value = _currentHealth / maxHealth;
     }
 
     private void Die()
