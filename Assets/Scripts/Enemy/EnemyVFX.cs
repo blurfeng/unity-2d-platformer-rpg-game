@@ -14,6 +14,8 @@ public class EnemyVFX : EntityVFX
 
     public void EnableAttackAlert(bool enable)
     {
-        attackAlert?.SetActive(enable);
+        if (!attackAlert) return;
+        
+        attackAlert.SetActive(enable);
     }
 }

@@ -8,7 +8,8 @@ public class ParallaxLayer
     [SerializeField, Range(0f, 1f), Tooltip("视差系数，为1时不移动（跟随相机），越接近0移动越快。")]
     private float parallaxMultiplier;
 
-    [SerializeField] private float imageWidthOffset = 10f;
+    [SerializeField, Tooltip("背景图像宽度的偏移量，用于调整循环背景时的边界检测，避免出现缝隙。")]
+    private float imageWidthOffset = 10f;
     
     private float _imageWidth;
     private float _imageHalfWidth;

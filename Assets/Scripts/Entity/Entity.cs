@@ -101,7 +101,7 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     /// <param name="velocityX"></param>
     /// <param name="velocityY"></param>
-    /// <param name="handle1">是否根据水平速度处理翻转，默认为false。</param>
+    /// <param name="handleFlip">是否根据水平速度处理翻转，默认为false。</param>
     public void SetVelocity(float velocityX, float velocityY, bool handleFlip = true)
     {
         if (_isKnocked)

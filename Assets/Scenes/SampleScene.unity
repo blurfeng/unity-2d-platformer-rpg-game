@@ -1337,7 +1337,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.5099998, y: 1.6346301, z: -10}
+  m_LocalPosition: {x: -6.5099998, y: 1.6050001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1777,6 +1777,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6597894183469580831, guid: 7a3feb603c2ad574c8b4db2e55c34bc5, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8879580544629023293, guid: 7a3feb603c2ad574c8b4db2e55c34bc5, type: 3}
       propertyPath: m_Name
       value: HealthBat_UI
@@ -1819,7 +1823,7 @@ Transform:
   m_GameObject: {fileID: 1065621415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.5099998, y: 1.6346301, z: -10}
+  m_LocalPosition: {x: -6.5099998, y: 1.6050001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1840,7 +1844,7 @@ MonoBehaviour:
   CameraDistance: 10
   DeadZoneDepth: 0
   Composition:
-    ScreenPosition: {x: 0, y: 0.1018519}
+    ScreenPosition: {x: 0, y: 0.1}
     DeadZone:
       Enabled: 1
       Size: {x: 0.3, y: 0.4}
