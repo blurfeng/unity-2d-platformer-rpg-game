@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UIManiHealthBar : MonoBehaviour
+public class UIMiniHealthBar : MonoBehaviour
 {
     private Entity _entity;
 
